@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Furnishioz</string>
+    <string name="home">Home</string>
+    <string name="detail">Detail</string>
+    <string name="cart">Cart</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="category">Category</string>
+    <string name="product_category">Category</string>
+    <string name="recommendation">Recommendation</string>
+    <string name="best_seller">Best Seller</string>
+    <string name="banner">Banner Image</string>
+    <string name="product">Product Item</string>
+    <string name="search_placeholder">Search Product</string>
+    <string name="price">$ %d</string>
+    <string name="total">Total: $ %d</string>
+    <string name="add_to_cart">Add to cart : $ %d</string>
+    <string name="detail_image">Product Photo</string>
+    <string name="back">Back</string>
+    <string name="brand">Brand : %1$s</string>
+    <string name="order">Order</string>
+    <string name="description">Description</string>
+    <string name="share_message">Transaction Success $ %2$d</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+</resources>
