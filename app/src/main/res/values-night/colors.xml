@@ -2,4 +2,5 @@
 <resources>
     <color name="textColor">#F1ECEC</color>
     <color name="cardColor">#150801</color>
+    <color name="back_button_color">#F1ECEC</color>
 </resources>

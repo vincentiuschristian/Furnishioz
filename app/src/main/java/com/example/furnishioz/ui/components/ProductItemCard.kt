@@ -26,7 +26,7 @@ import com.example.furnishioz.R
 import com.example.furnishioz.ui.theme.FurnishiozTheme
 
 @Composable
-fun ProductItem(
+fun ProductItemCard(
     name: String,
     imageUrl: String,
     price: Int,
@@ -72,12 +72,11 @@ fun ProductItem(
     }
 }
 
-
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun ProductItemPreview(){
     FurnishiozTheme {
-        ProductItem(
+        ProductItemCard(
             name = "Kanar Bed",
             imageUrl = "",
             120

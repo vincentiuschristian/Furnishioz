@@ -30,9 +30,9 @@ import com.example.furnishioz.di.Injection
 import com.example.furnishioz.model.OrderItem
 import com.example.furnishioz.model.dummyCategory
 import com.example.furnishioz.ui.common.UiState
-import com.example.furnishioz.ui.components.CategoryProduct
+import com.example.furnishioz.ui.components.CategoryProductCard
 import com.example.furnishioz.ui.components.HomeSection
-import com.example.furnishioz.ui.components.ProductItem
+import com.example.furnishioz.ui.components.ProductItemCard
 
 @Composable
 fun HomeScreen(
@@ -57,9 +57,9 @@ fun HomeScreen(
                 is UiState.Loading -> viewModel.getAllItem()
                 is UiState.Success -> {
                     HomeSection(
-                        title = stringResource(R.string.recommendation),
+                        title = stringResource(R.string.best_seller),
                         content = {
-                            ProductItemCard(
+                            ProductItemContent(
                                 orderItem = uiState.data,
                                 navigateToDetail = navigateToDetail,
                                 modifier = modifier
@@ -67,10 +67,10 @@ fun HomeScreen(
                         }
                     )
                     HomeSection(
-                        title = stringResource(R.string.best_seller),
+                        title = stringResource(R.string.recommendation),
                         content = {
-                            ProductItemCard(
-                                orderItem = uiState.data,
+                            ProductRecContent(
+                                orderItem = uiState.data.shuffled(),
                                 navigateToDetail = navigateToDetail,
                                 modifier = modifier
                             )
@@ -87,7 +87,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun ProductItemCard(
+fun ProductItemContent(
     orderItem: List<OrderItem>,
     modifier: Modifier = Modifier,
     navigateToDetail: (Long) -> Unit
@@ -96,10 +96,33 @@ fun ProductItemCard(
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
-            .testTag("Product List")
+            .testTag("ProductList")
     ) {
         items(orderItem) { data ->
-            ProductItem(
+            ProductItemCard(
+                name = data.product.name,
+                imageUrl = data.product.image,
+                price = data.product.price,
+                modifier = modifier.clickable {
+                    navigateToDetail(data.product.id)
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductRecContent(
+    orderItem: List<OrderItem>,
+    modifier: Modifier = Modifier,
+    navigateToDetail: (Long) -> Unit
+) {
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(orderItem) { data ->
+            ProductItemCard(
                 name = data.product.name,
                 imageUrl = data.product.image,
                 price = data.product.price,
@@ -118,7 +141,7 @@ fun CategoryRow() {
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(dummyCategory, key = { it.textCategory }) { category ->
-            CategoryProduct(category)
+            CategoryProductCard(category)
         }
     }
 }

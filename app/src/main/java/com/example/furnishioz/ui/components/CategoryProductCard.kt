@@ -21,7 +21,7 @@ import com.example.furnishioz.model.Category
 import com.example.furnishioz.ui.theme.FurnishiozTheme
 
 @Composable
-fun CategoryProduct(
+fun CategoryProductCard(
     category: Category,
     modifier: Modifier = Modifier,
 ) {
@@ -51,7 +51,7 @@ fun CategoryProduct(
 @Composable
 fun CategoryProductPreview() {
     FurnishiozTheme {
-        CategoryProduct(
+        CategoryProductCard(
             category = Category(
                 R.drawable.chair,
                 "Chair"

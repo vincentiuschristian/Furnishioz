@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.furnishioz.data.FurnishiozRepository
-import com.example.furnishioz.model.Product
+import com.example.furnishioz.model.OrderItem
 import com.example.furnishioz.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,9 +14,9 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel(private val repository: FurnishiozRepository) : ViewModel() {
 
-    private val _uiStates: MutableStateFlow<UiState<List<Product>>> =
+    private val _uiStates: MutableStateFlow<UiState<List<OrderItem>>> =
         MutableStateFlow(UiState.Loading)
-    val uiState: StateFlow<UiState<List<Product>>>
+    val uiState: StateFlow<UiState<List<OrderItem>>>
         get() = _uiStates
 
     private val _query = mutableStateOf("")
@@ -24,12 +24,12 @@ class SearchViewModel(private val repository: FurnishiozRepository) : ViewModel(
 
     fun getAllProduct() {
         viewModelScope.launch {
-            repository.getAllProducts()
+            repository.getAllProduct()
                 .catch {
                     _uiStates.value = UiState.Error(it.message.toString())
                 }
-                .collect { orderItem ->
-                    _uiStates.value = UiState.Success(orderItem)
+                .collect { product ->
+                    _uiStates.value = UiState.Success(product)
                 }
         }
     }
@@ -41,10 +41,12 @@ class SearchViewModel(private val repository: FurnishiozRepository) : ViewModel(
                 .catch {
                     _uiStates.value = UiState.Error(it.message.toString())
                 }
-                .collect {
-                    _uiStates.value = UiState.Success(it)
+                .collect { product ->
+                    _uiStates.value = UiState.Success(product.map { OrderItem(it, 0) })
                 }
+
         }
 
     }
+
 }

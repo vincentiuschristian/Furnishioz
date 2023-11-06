@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.map
 class FurnishiozRepository {
 
     private val orderItems = mutableListOf<OrderItem>()
-    private val productItem = mutableListOf<Product>()
 
     init {
         if (orderItems.isEmpty()) {
@@ -20,13 +19,8 @@ class FurnishiozRepository {
         }
     }
 
-
     fun getAllProduct(): Flow<List<OrderItem>> {
         return flowOf(orderItems)
-    }
-
-    fun getAllProducts(): Flow<List<Product>> {
-        return flowOf(productItem)
     }
 
     fun searchProduct(query: String): Flow<List<Product>> {

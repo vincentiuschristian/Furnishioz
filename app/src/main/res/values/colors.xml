@@ -10,4 +10,5 @@
     <color name="textColor">#120101</color>
     <color name="cardColor">#F0F1F2</color>
     <color name="textDescription">#757575</color>
+    <color name="back_button_color">#120101</color>
 </resources>

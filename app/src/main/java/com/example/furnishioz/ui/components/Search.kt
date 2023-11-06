@@ -18,7 +18,7 @@ import com.example.furnishioz.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Search(
+fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier

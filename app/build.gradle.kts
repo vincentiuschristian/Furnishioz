@@ -73,4 +73,8 @@ dependencies {
     androidTestImplementation ("androidx.navigation:navigation-testing:2.7.5")
 
     implementation ("com.google.accompanist:accompanist-pager:0.27.1")
+
+    // testing
+    implementation ("androidx.navigation:navigation-compose:2.7.5")
+    androidTestImplementation ("androidx.navigation:navigation-testing:2.7.5")
 }

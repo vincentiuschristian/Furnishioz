@@ -1,5 +1,6 @@
 package com.example.furnishioz.ui.screen.detail
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -115,8 +117,14 @@ fun DetailContent(
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowLeft,
                     contentDescription = stringResource(R.string.back),
+                    tint = colorResource(R.color.back_button_color),
                     modifier = modifier
-                        .padding(16.dp)
+                        .padding(12.dp)
+                        .size(36.dp)
+                        .background(
+                            shape = MaterialTheme.shapes.medium,
+                            color = colorResource(R.color.cardColor)
+                        )
                         .clickable { onBackClick() }
                 )
             }
@@ -193,7 +201,7 @@ fun DetailContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = false, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DetailProductScreenPreview() {
     FurnishiozTheme {
