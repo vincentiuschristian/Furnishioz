@@ -2,6 +2,7 @@ package com.example.furnishioz.ui.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -61,6 +62,7 @@ fun ProductCard(
                     ),
                     color = colorResource(R.color.textColor)
                 )
+                Spacer(modifier = modifier.padding(2.dp))
                 Text(
                     text = stringResource(R.string.price, price),
                     style = MaterialTheme.typography.titleSmall,

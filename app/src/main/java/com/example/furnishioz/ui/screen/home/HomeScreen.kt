@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -162,17 +165,22 @@ fun Banner(modifier: Modifier = Modifier) {
     val pagerState = rememberPagerState(pageCount = {
         5
     })
+    Card(
+        modifier = modifier.padding(16.dp),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        HorizontalPager(
+            state = pagerState,
+        ) { index ->
 
-    HorizontalPager(
-        state = pagerState
-    ) { index ->
-        Image(
-            painter = painterResource(imageBanner[index]),
-            contentDescription = stringResource(R.string.banner),
-            contentScale = ContentScale.FillBounds,
-            modifier = modifier.height(180.dp)
-        )
+            Image(
+                painter = painterResource(imageBanner[index]),
+                contentDescription = stringResource(R.string.banner),
+                contentScale = ContentScale.Crop,
+                modifier = modifier.height(180.dp)
+            )
 
+        }
     }
 }
 

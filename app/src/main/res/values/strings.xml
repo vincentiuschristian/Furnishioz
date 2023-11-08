@@ -18,7 +18,7 @@
     <string name="emptyCart">There is no cart here</string>
     <string name="search_placeholder">Search Product</string>
     <string name="price">$ %d</string>
-    <string name="total_order">Price Total : $ %d</string>
+    <string name="total_order">Total : $ %d</string>
     <string name="total">Total Transaction</string>
     <string name="add_to_cart">Add to cart : $ %d</string>
     <string name="detail_image">Product Photo</string>

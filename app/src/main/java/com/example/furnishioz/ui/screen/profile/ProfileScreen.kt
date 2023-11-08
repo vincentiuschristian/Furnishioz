@@ -28,14 +28,14 @@ fun ProfileScreen(
         contentAlignment = Alignment.Center
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(R.drawable.profilepict),
                 contentDescription = stringResource(R.string.profile_picture),
                 contentScale = ContentScale.Crop,
                 modifier = modifier
-                    .size(240.dp)
+                    .size(200.dp)
                     .clip(CircleShape)
             )
             Text(

@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,7 +36,10 @@ fun SearchBar(
         onQueryChange = onQueryChange,
         onSearch = {},
         active = false,
-        colors = SearchBarDefaults.colors(containerColor = colorResource(R.color.cardColor)),
+        colors = SearchBarDefaults.colors(
+            containerColor = colorResource(R.color.cardColor),
+            inputFieldColors = TextFieldDefaults.colors(MaterialTheme.colorScheme.onBackground)
+        ),
         onActiveChange = {},
         leadingIcon = {
             Icon(
@@ -53,6 +58,7 @@ fun SearchBar(
         modifier = modifier
             .padding(16.dp)
             .fillMaxWidth()
+            .width(1.dp)
             .heightIn(min = 48.dp)
     ) {
     }
