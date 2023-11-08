@@ -146,7 +146,8 @@ fun DetailContent(
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold
                     ),
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = modifier.padding(top = 8.dp)
                 )
                 Text(
                     text = stringResource(R.string.brand, brand),
@@ -154,6 +155,7 @@ fun DetailContent(
                         fontWeight = FontWeight.Medium
                     ),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = modifier.padding(top = 8.dp)
                 )
                 Divider(
                     modifier = modifier.padding(top = 16.dp)
@@ -173,6 +175,7 @@ fun DetailContent(
                         fontWeight = FontWeight.Normal
                     ),
                     color = colorResource(R.color.textDescription),
+                    modifier = modifier.padding(top = 8.dp)
                 )
             }
         }
@@ -217,7 +220,7 @@ fun DetailProductScreenPreview() {
             count = 0,
             description = stringResource(R.string.lorem_ipsum),
             brand = "Kana",
-            onBackClick = { /*TODO*/ },
+            onBackClick = {  },
             onAddToCart = {}
         )
     }

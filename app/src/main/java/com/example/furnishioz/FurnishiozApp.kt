@@ -162,6 +162,7 @@ private fun BottomBar(
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
+                        launchSingleTop = true
                         restoreState = true
                     }
                 }

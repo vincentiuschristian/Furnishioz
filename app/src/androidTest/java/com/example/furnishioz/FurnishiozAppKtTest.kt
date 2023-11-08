@@ -72,7 +72,7 @@ class FurnishiozAppKtTest {
 
     @Test
     fun navHost_checkout_rightBackStack() {
-        composeTestRule.onNodeWithText(ProductData.dummyProducts[4].name).performClick()
+        composeTestRule.onNodeWithText(ProductData.dummyProducts[2].name).performClick()
         navController.assertCurrentRouteName(Screen.DetailProduct.route)
         composeTestRule.onNodeWithStringId(R.string.plus_symbol).performClick()
         composeTestRule.onNodeWithContentDescription("Order Button").performClick()
@@ -80,6 +80,5 @@ class FurnishiozAppKtTest {
         composeTestRule.onNodeWithStringId(R.string.home).performClick()
         navController.assertCurrentRouteName(Screen.Home.route)
     }
-
 
 }
