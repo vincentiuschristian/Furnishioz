@@ -26,10 +26,10 @@ fun ProfileScreen(
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-        ){
+        ) {
             Image(
                 painter = painterResource(R.drawable.profilepict),
                 contentDescription = stringResource(R.string.profile_picture),

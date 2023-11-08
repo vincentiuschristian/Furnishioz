@@ -12,17 +12,18 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: FurnishiozRepository) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<UiState<List<OrderItem>>> = MutableStateFlow(UiState.Loading)
+    private val _uiState: MutableStateFlow<UiState<List<OrderItem>>> =
+        MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState<List<OrderItem>>>
         get() = _uiState
 
-    fun getAllItem(){
+    fun getAllItem() {
         viewModelScope.launch {
             repository.getAllProduct()
                 .catch {
                     _uiState.value = UiState.Error(it.message.toString())
                 }
-                .collect {orderItem ->
+                .collect { orderItem ->
                     _uiState.value = UiState.Success(orderItem)
                 }
         }

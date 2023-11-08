@@ -36,23 +36,11 @@ class FurnishiozRepository {
         }
     }
 
-//        fun updateOrderProduct(productId: Long, newCountValue: Int): Flow<Boolean> {
-//        val index = orderItems.indexOfFirst { it.product.id == productId }
-//        val result = if (index >= 0) {
-//            val orderItem = orderItems[index]
-//            orderItems[index] = orderItem.copy(product = orderItem.product, count = newCountValue)
-//            true
-//        } else {
-//            false
-//        }
-//        return flowOf(result)
-//    }
-
     fun updateOrderProduct(productId: Long, newCountValue: Int): Flow<Boolean> {
         val index = orderItems.indexOfFirst { it.product.id == productId }
         val result = if (index >= 0 && index <= orderItems.size) {
             val orderItem = orderItems[index]
-            orderItems[index] = orderItem.copy( product = orderItem.product, count = newCountValue)
+            orderItems[index] = orderItem.copy(product = orderItem.product, count = newCountValue)
             true
         } else {
             false

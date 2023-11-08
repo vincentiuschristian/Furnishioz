@@ -18,4 +18,4 @@ val dummyCategory = listOf(
     R.drawable.storage to "Storage",
     R.drawable.wardrobe to "Wardrobe"
 
-).map {Category(it.first, it.second)}
+).map { Category(it.first, it.second) }

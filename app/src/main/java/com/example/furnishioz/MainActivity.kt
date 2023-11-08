@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Box(Modifier.safeDrawingPadding()){
+            Box(Modifier.safeDrawingPadding()) {
                 FurnishiozTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),

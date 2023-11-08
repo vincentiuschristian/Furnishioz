@@ -78,7 +78,7 @@ fun FurnishiozApp(
             composable(Screen.Cart.route) {
                 val context = LocalContext.current
                 CartScreen(
-                    onOrderButtonClicked = {message ->
+                    onOrderButtonClicked = { message ->
                         showMessage(context, message)
                     }
                 )
@@ -172,7 +172,7 @@ private fun BottomBar(
 }
 
 
-private fun showMessage(context: Context, message: String){
+private fun showMessage(context: Context, message: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.total))

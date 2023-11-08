@@ -1,6 +1,6 @@
 package com.example.furnishioz.model
 
-object ProductData{
+object ProductData {
     val dummyProducts = listOf(
         Product(
             id = 1,
@@ -15,7 +15,7 @@ object ProductData{
             name = "Koilt Bed",
             image = "https://raw.githubusercontent.com/cheftz/asset/main/bed.jpg",
             description = "Sleeping is one of those things that humans can't get enough of. That's how much we like to dream. To guarantee a good night sleep, a comfortable bed like Koilt Bed is much needed",
-            price = 560 ,
+            price = 560,
             brand = "Nano King"
         ),
         Product(
@@ -116,5 +116,5 @@ object ProductData{
             brand = "Saga Furniture"
         ),
 
-    )
+        )
 }

@@ -42,11 +42,11 @@ fun HomeScreen(
     ),
     navigateToDetail: (Long) -> Unit,
 ) {
-    Column (
+    Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
             .fillMaxSize()
-    ){
+    ) {
         Banner()
         HomeSection(
             title = stringResource(R.string.product_category),

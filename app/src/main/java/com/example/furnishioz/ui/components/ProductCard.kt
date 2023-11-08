@@ -39,7 +39,7 @@ fun ProductCard(
             containerColor = colorResource(R.color.cardColor)
         )
     ) {
-        Column{
+        Column {
             AsyncImage(
                 model = imageUrl,
                 contentDescription = stringResource(R.string.product),
@@ -74,7 +74,7 @@ fun ProductCard(
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun ProductItemPreview(){
+fun ProductItemPreview() {
     FurnishiozTheme {
         ProductCard(
             name = "Kanar Bed",

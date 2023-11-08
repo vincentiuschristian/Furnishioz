@@ -1,5 +1,6 @@
 package com.example.furnishioz.ui.components
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -9,10 +10,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,8 +34,9 @@ fun SearchBar(
         onQueryChange = onQueryChange,
         onSearch = {},
         active = false,
+        colors = SearchBarDefaults.colors(containerColor = colorResource(R.color.cardColor)),
         onActiveChange = {},
-        leadingIcon ={
+        leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
@@ -54,9 +58,9 @@ fun SearchBar(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun SearchBarPreview(){
+fun SearchBarPreview() {
     FurnishiozTheme {
         SearchBar(
             query = "",
