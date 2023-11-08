@@ -21,7 +21,7 @@ import com.example.furnishioz.model.Category
 import com.example.furnishioz.ui.theme.FurnishiozTheme
 
 @Composable
-fun CategoryProductCard(
+fun CategoryCard(
     category: Category,
     modifier: Modifier = Modifier,
 ) {
@@ -32,9 +32,9 @@ fun CategoryProductCard(
         AsyncImage(
             model = category.imageCategory,
             contentDescription = stringResource(R.string.category),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = modifier
-                .size(50.dp)
+                .size(48.dp)
                 .clip(CircleShape)
         )
         Text(
@@ -51,10 +51,10 @@ fun CategoryProductCard(
 @Composable
 fun CategoryProductPreview() {
     FurnishiozTheme {
-        CategoryProductCard(
+        CategoryCard(
             category = Category(
-                R.drawable.chair,
-                "Chair"
+                R.drawable.plant,
+                "Plant"
             ),
             modifier = Modifier.padding(horizontal = 8.dp)
         )

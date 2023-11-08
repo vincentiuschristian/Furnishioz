@@ -12,9 +12,12 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.furnishioz.R
+import com.example.furnishioz.ui.theme.FurnishiozTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,11 +36,14 @@ fun SearchBar(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = Color.Gray
             )
         },
         placeholder = {
-            Text(stringResource(R.string.search_placeholder))
+            Text(
+                text = stringResource(R.string.search_placeholder),
+                color = Color.Gray
+            )
         },
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
@@ -48,3 +54,13 @@ fun SearchBar(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun SearchBarPreview(){
+    FurnishiozTheme {
+        SearchBar(
+            query = "",
+            onQueryChange = {}
+        )
+    }
+}

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
@@ -79,7 +79,7 @@ fun FurnishiozApp(
                 val context = LocalContext.current
                 CartScreen(
                     onOrderButtonClicked = {message ->
-                        showSnackBar(context, message)
+                        showMessage(context, message)
                     }
                 )
             }
@@ -128,7 +128,7 @@ private fun BottomBar(
         val navigationItem = listOf(
             NavigationItem(
                 title = stringResource(R.string.home),
-                icon = Icons.Default.Home,
+                icon = Icons.Outlined.Home,
                 screen = Screen.Home
             ),
             NavigationItem(
@@ -172,7 +172,7 @@ private fun BottomBar(
 }
 
 
-private fun showSnackBar(context: Context, message: String){
+private fun showMessage(context: Context, message: String){
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.total))

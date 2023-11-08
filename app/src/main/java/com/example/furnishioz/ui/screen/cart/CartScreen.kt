@@ -9,14 +9,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +34,7 @@ import com.example.furnishioz.ui.common.UiState
 import com.example.furnishioz.ui.components.CartItem
 import com.example.furnishioz.ui.components.OrderButton
 
+
 @Composable
 fun CartScreen(
     viewModel: CartViewModel = viewModel(
@@ -37,14 +42,17 @@ fun CartScreen(
             Injection.provideRepository()
         )
     ),
-    onOrderButtonClicked: (String) -> Unit
+    onOrderButtonClicked: (String) -> Unit,
 ) {
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
-            is UiState.Loading -> viewModel.getAddOrderProduct()
+            is UiState.Loading -> {
+                viewModel.getAddedOrderProduct()
+            }
+
             is UiState.Success -> {
                 CartContent(
-                    state = uiState.data,
+                    uiState.data,
                     onProductCountChanged = { productId, count ->
                         viewModel.updateOrderProduct(productId, count)
                     },
@@ -55,7 +63,6 @@ fun CartScreen(
             is UiState.Error -> {}
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,18 +71,27 @@ fun CartContent(
     state: CartState,
     onProductCountChanged: (id: Long, count: Int) -> Unit,
     onOrderButtonClicked: (String) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
+
     val shareMessage = stringResource(
         R.string.share_message,
         state.orderProduct.count(),
         state.totalRequiredPrice
     )
 
+    val listState = rememberLazyListState()
+
     Column(
         modifier = modifier.fillMaxSize()
     ) {
         CenterAlignedTopAppBar(
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.background,
+                titleContentColor = MaterialTheme.colorScheme.onBackground,
+                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                actionIconContentColor = MaterialTheme.colorScheme.onSecondary
+            ),
             title = {
                 Text(
                     text = stringResource(R.string.cart),
@@ -86,12 +102,14 @@ fun CartContent(
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center
                 )
-            }
+            },
         )
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = modifier.weight(weight = 1f)
+            state = listState,
+            modifier = Modifier
+                .weight(weight = 1f)
         ) {
             if (state.orderProduct.isNotEmpty()) {
                 items(state.orderProduct, key = { it.product.id }) { item ->
@@ -99,36 +117,41 @@ fun CartContent(
                         productId = item.product.id,
                         imageUrl = item.product.image,
                         name = item.product.name,
-                        price = item.product.price * item.count,
+                        totalPrice = item.product.price * item.count,
                         count = item.count,
                         onProductCountChanged = onProductCountChanged,
+                        modifier = modifier.fillMaxWidth()
+                    )
+
+                    Divider(
+                        modifier = modifier.padding(top = 16.dp)
                     )
                 }
             } else {
                 item {
                     Box(
-                        modifier = modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = stringResource(R.string.emptyCart),
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.DarkGray
                         )
                     }
                 }
             }
         }
-
         OrderButton(
-            text = stringResource(R.string.total, state.totalRequiredPrice),
+            text = stringResource(R.string.total_order, state.totalRequiredPrice),
             enabled = state.orderProduct.isNotEmpty(),
             onClick = {
                 onOrderButtonClicked(shareMessage)
             },
-            modifier = modifier.padding(8.dp)
+            modifier = Modifier.padding(16.dp)
         )
-
     }
 }
+
 
 

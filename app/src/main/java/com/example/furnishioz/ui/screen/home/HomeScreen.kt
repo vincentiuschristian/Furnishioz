@@ -30,9 +30,9 @@ import com.example.furnishioz.di.Injection
 import com.example.furnishioz.model.OrderItem
 import com.example.furnishioz.model.dummyCategory
 import com.example.furnishioz.ui.common.UiState
-import com.example.furnishioz.ui.components.CategoryProductCard
+import com.example.furnishioz.ui.components.CategoryCard
 import com.example.furnishioz.ui.components.HomeSection
-import com.example.furnishioz.ui.components.ProductItemCard
+import com.example.furnishioz.ui.components.ProductCard
 
 @Composable
 fun HomeScreen(
@@ -53,6 +53,7 @@ fun HomeScreen(
             content = { CategoryRow() }
         )
         viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+
             when (uiState) {
                 is UiState.Loading -> viewModel.getAllItem()
                 is UiState.Success -> {
@@ -70,7 +71,7 @@ fun HomeScreen(
                         title = stringResource(R.string.recommendation),
                         content = {
                             ProductRecContent(
-                                orderItem = uiState.data.shuffled(),
+                                orderItem = uiState.data,
                                 navigateToDetail = navigateToDetail,
                                 modifier = modifier
                             )
@@ -99,7 +100,7 @@ fun ProductItemContent(
             .testTag("ProductList")
     ) {
         items(orderItem) { data ->
-            ProductItemCard(
+            ProductCard(
                 name = data.product.name,
                 imageUrl = data.product.image,
                 price = data.product.price,
@@ -121,8 +122,8 @@ fun ProductRecContent(
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(orderItem) { data ->
-            ProductItemCard(
+        items(orderItem.shuffled()) { data ->
+            ProductCard(
                 name = data.product.name,
                 imageUrl = data.product.image,
                 price = data.product.price,
@@ -141,7 +142,7 @@ fun CategoryRow() {
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(dummyCategory, key = { it.textCategory }) { category ->
-            CategoryProductCard(category)
+            CategoryCard(category)
         }
     }
 }

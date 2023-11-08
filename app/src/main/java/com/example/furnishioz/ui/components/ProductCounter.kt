@@ -39,14 +39,14 @@ fun ProductCounter(
     ) {
         Surface(
             shape = RoundedCornerShape(size = 8.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
             color = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(30.dp)
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.size(24.dp)
         ) {
             Text(
                 text = "—",
-                fontSize = 20.sp,
+                fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .weight(1f)
@@ -58,7 +58,6 @@ fun ProductCounter(
         Text(
             text = orderCount.toString(),
             modifier = Modifier
-                // tag untuk di test
                 .testTag("count")
                 .weight(1f),
             fontSize = 20.sp,
@@ -67,14 +66,14 @@ fun ProductCounter(
         )
         Surface(
             shape = RoundedCornerShape(size = 8.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
             color = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(30.dp)
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.size(24.dp)
         ) {
             Text(
                 text = "＋",
-                fontSize = 20.sp,
+                fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .weight(1f)

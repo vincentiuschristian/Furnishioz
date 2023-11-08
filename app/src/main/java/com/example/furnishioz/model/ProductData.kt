@@ -15,7 +15,7 @@ object ProductData{
             name = "Koilt Bed",
             image = "https://raw.githubusercontent.com/cheftz/asset/main/bed.jpg",
             description = "Sleeping is one of those things that humans can't get enough of. That's how much we like to dream. To guarantee a good night sleep, a comfortable bed like Koilt Bed is much needed",
-            price = 560,
+            price = 560 ,
             brand = "Nano King"
         ),
         Product(
@@ -93,7 +93,7 @@ object ProductData{
         ),
         Product(
             id = 12,
-            name = "Anna Wood Chair",
+            name = "Ann Wood Chair",
             image = "https://raw.githubusercontent.com/cheftz/asset/main/wood-chair-white-living-room-interior-with-blank-table-mockup.jpg",
             description = "Create harmony in the home by eating home cooked meals with Anna Wood Chair.",
             price = 250,

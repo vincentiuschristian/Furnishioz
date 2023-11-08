@@ -26,7 +26,7 @@ import com.example.furnishioz.ViewModelFactory
 import com.example.furnishioz.di.Injection
 import com.example.furnishioz.model.OrderItem
 import com.example.furnishioz.ui.common.UiState
-import com.example.furnishioz.ui.components.ProductItemCard
+import com.example.furnishioz.ui.components.ProductCard
 import com.example.furnishioz.ui.components.SearchBar
 
 @Composable
@@ -76,7 +76,7 @@ fun SearchContent(
     ) {
         if (orderItem.isNotEmpty()) {
             items(orderItem) { data ->
-                ProductItemCard(
+                ProductCard(
                     name = data.product.name,
                     imageUrl = data.product.image,
                     price = data.product.price,

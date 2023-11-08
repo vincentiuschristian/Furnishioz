@@ -36,11 +36,23 @@ class FurnishiozRepository {
         }
     }
 
-    fun updateOrderProduct(itemId: Long, newCountValue: Int): Flow<Boolean> {
-        val index = orderItems.indexOfFirst { it.product.id == itemId }
-        val result = if (index >= 0) {
+//        fun updateOrderProduct(productId: Long, newCountValue: Int): Flow<Boolean> {
+//        val index = orderItems.indexOfFirst { it.product.id == productId }
+//        val result = if (index >= 0) {
+//            val orderItem = orderItems[index]
+//            orderItems[index] = orderItem.copy(product = orderItem.product, count = newCountValue)
+//            true
+//        } else {
+//            false
+//        }
+//        return flowOf(result)
+//    }
+
+    fun updateOrderProduct(productId: Long, newCountValue: Int): Flow<Boolean> {
+        val index = orderItems.indexOfFirst { it.product.id == productId }
+        val result = if (index >= 0 && index <= orderItems.size) {
             val orderItem = orderItems[index]
-            orderItems[index] = orderItem.copy(product = orderItem.product, count = newCountValue)
+            orderItems[index] = orderItem.copy( product = orderItem.product, count = newCountValue)
             true
         } else {
             false
@@ -50,9 +62,9 @@ class FurnishiozRepository {
 
     fun getAddedOrderProduct(): Flow<List<OrderItem>> {
         return getAllProduct()
-            .map { orderItems ->
-                orderItems.filter { orderItem ->
-                    orderItem.count != 0
+            .map { orderProducts ->
+                orderProducts.filter { orderProduct ->
+                    orderProduct.count != 0
                 }
             }
     }

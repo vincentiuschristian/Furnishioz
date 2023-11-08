@@ -28,7 +28,7 @@ fun ProfileScreen(
         contentAlignment = Alignment.Center
     ){
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ){
             Image(
                 painter = painterResource(R.drawable.profilepict),

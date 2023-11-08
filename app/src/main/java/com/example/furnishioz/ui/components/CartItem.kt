@@ -2,6 +2,7 @@ package com.example.furnishioz.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,7 +28,7 @@ fun CartItem(
     productId: Long,
     imageUrl: String,
     name: String,
-    price: Int,
+    totalPrice: Int,
     count: Int,
     onProductCountChanged: (id: Long, count: Int) -> Unit,
     modifier: Modifier = Modifier
@@ -37,59 +38,59 @@ fun CartItem(
     ) {
         AsyncImage(
             model = imageUrl,
-            contentDescription = null,
+            contentDescription = stringResource(R.string.detail_image),
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(90.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .size(80.dp)
+                .fillMaxSize()
+                .clip(shape = RoundedCornerShape(8.dp))
         )
-        Column( modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .weight(1.0f),
-            horizontalAlignment = Alignment.Start
-        ){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .weight(1.0f),
+        ) {
             Text(
                 text = name,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleMedium.copy(
+                style = MaterialTheme.typography.titleSmall.copy(
                     fontWeight = FontWeight.Medium
                 )
             )
             Text(
-                text = stringResource(R.string.price, price),
+                text = stringResource(
+                    R.string.price,
+                    totalPrice
+                ),
                 color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.titleSmall.copy(
-                    fontWeight = FontWeight.Bold
-                )
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
         ProductCounter(
             orderId = productId,
             orderCount = count,
-            onProductIncreased = {onProductCountChanged(productId, count + 1)},
-            onProductDecreased = {onProductCountChanged(productId, count - 1)},
-            modifier = modifier
+            onProductIncreased = { onProductCountChanged(productId, count + 1) },
+            onProductDecreased = { onProductCountChanged(productId, count - 1) },
+            modifier = Modifier
                 .padding(8.dp)
                 .align(Alignment.CenterVertically)
         )
     }
-
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showBackground = true)
 fun CartItemPreview() {
     FurnishiozTheme {
         CartItem(
-            productId = 1,
+            productId = 4,
             imageUrl = "",
-            name = "Wardrobe",
-            price = 120,
-            count = 2,
-            onProductCountChanged = { _, _ -> }
+            name = "Prite Wardrobe",
+            totalPrice = 210,
+            count = 0,
+            onProductCountChanged = { _, _ -> },
         )
-
     }
 }

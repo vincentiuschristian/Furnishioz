@@ -15,7 +15,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
+import androidx.compose.material.icons.outlined.KeyboardArrowLeft
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -56,8 +57,8 @@ fun DetailProductScreen(
     navigateBack: () -> Unit,
     navigateToCart: () -> Unit,
 ) {
-    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let {uiState ->
-        when(uiState) {
+    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
             is UiState.Loading -> viewModel.getProductById(productId)
             is UiState.Success -> {
                 val data = uiState.data
@@ -69,12 +70,13 @@ fun DetailProductScreen(
                     brand = data.product.brand,
                     count = data.count,
                     onBackClick = { navigateBack() },
-                    onAddToCart = {count ->
+                    onAddToCart = { count ->
                         viewModel.addToCart(data.product, count)
                         navigateToCart()
                     }
                 )
             }
+
             is UiState.Error -> {}
         }
     }
@@ -115,7 +117,7 @@ fun DetailContent(
                         .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
                 )
                 Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowLeft,
+                    imageVector = Icons.Outlined.KeyboardArrowLeft,
                     contentDescription = stringResource(R.string.back),
                     tint = colorResource(R.color.back_button_color),
                     modifier = modifier
@@ -152,6 +154,9 @@ fun DetailContent(
                         fontWeight = FontWeight.Medium
                     ),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Divider(
+                    modifier = modifier.padding(top = 16.dp)
                 )
                 Text(
                     text = stringResource(R.string.description),
