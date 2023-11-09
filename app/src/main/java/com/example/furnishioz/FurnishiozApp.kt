@@ -61,6 +61,7 @@ fun FurnishiozApp(
             startDestination = Screen.Home.route,
             modifier = modifier.padding(innerPadding)
         ) {
+            val productId = "productId"
             composable(Screen.Home.route) {
                 HomeScreen(
                     navigateToDetail = { productId ->
@@ -88,9 +89,9 @@ fun FurnishiozApp(
             }
             composable(
                 route = Screen.DetailProduct.route,
-                arguments = listOf(navArgument("productId") { type = NavType.LongType }),
+                arguments = listOf(navArgument(productId) { type = NavType.LongType }),
             ) {
-                val id = it.arguments?.getLong("productId") ?: -1L
+                val id = it.arguments?.getLong(productId) ?: -1L
                 DetailProductScreen(
                     productId = id,
                     navigateBack = {

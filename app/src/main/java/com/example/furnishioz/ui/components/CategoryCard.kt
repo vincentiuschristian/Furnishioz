@@ -42,13 +42,13 @@ fun CategoryCard(
                 painter = painterResource(category.imageCategory),
                 contentDescription = stringResource(R.string.category),
                 contentScale = ContentScale.Crop,
-                modifier = modifier.padding(4.dp)
+                modifier = Modifier.padding(4.dp)
             )
         }
         Text(
             text = category.textCategory,
             fontSize = 10.sp,
-            modifier = modifier.paddingFromBaseline(top = 16.dp, bottom = 8.dp)
+            modifier = Modifier.paddingFromBaseline(top = 16.dp, bottom = 8.dp)
         )
     }
 }

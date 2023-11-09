@@ -197,6 +197,7 @@ fun DetailContent(
                     .align(Alignment.CenterVertically)
                     .padding(bottom = 16.dp)
             )
+            Spacer(modifier = Modifier.padding(4.dp))
             totalPrice = basePrice * orderCount
             OrderButton(
                 text = stringResource(R.string.add_to_cart, totalPrice),

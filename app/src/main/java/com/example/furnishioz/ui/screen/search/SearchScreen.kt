@@ -13,13 +13,13 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.furnishioz.R
 import com.example.furnishioz.ViewModelFactory
@@ -38,26 +38,45 @@ fun SearchScreen(
     navigateToDetail: (Long) -> Unit,
 ) {
     val query by viewModel.query
+    val uiStates by viewModel.uiState.collectAsStateWithLifecycle()
 
-    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-        when (uiState) {
-            is UiState.Loading -> viewModel.getAllProduct()
-            is UiState.Success -> {
-                Column(
-                    modifier = modifier.fillMaxSize()
-                ) {
-                    SearchBar(query = query, onQueryChange = viewModel::searchProduct)
-                    SearchContent(
-                        orderItem = uiState.data,
-                        navigateToDetail = navigateToDetail,
-                        modifier = modifier
-                    )
-                }
+    when (val state = uiStates) {
+        is UiState.Loading -> viewModel.getAllProduct()
+        is UiState.Success -> {
+            Column(
+                modifier = modifier.fillMaxSize()
+            ) {
+                SearchBar(query = query, onQueryChange = viewModel::searchProduct)
+                SearchContent(
+                    orderItem = state.data,
+                    navigateToDetail = navigateToDetail,
+                    modifier = modifier
+                )
             }
-
-            is UiState.Error -> {}
         }
+
+        is UiState.Error -> {}
     }
+
+//    viewModel.uiState.collectAsStateWithLifecycle().value.let { uiState ->
+//        when (uiState) {
+//            is UiState.Loading -> viewModel.getAllProduct()
+//            is UiState.Success -> {
+//                Column(
+//                    modifier = modifier.fillMaxSize()
+//                ) {
+//                    SearchBar(query = query, onQueryChange = viewModel::searchProduct)
+//                    SearchContent(
+//                        orderItem = uiState.data,
+//                        navigateToDetail = navigateToDetail,
+//                        modifier = modifier
+//                    )
+//                }
+//            }
+//
+//            is UiState.Error -> {}
+//        }
+//    }
 }
 
 @Composable
@@ -77,6 +96,7 @@ fun SearchContent(
         if (orderItem.isNotEmpty()) {
             items(orderItem) { data ->
                 ProductCard(
+                    key = data.product.id,
                     name = data.product.name,
                     imageUrl = data.product.image,
                     price = data.product.price,

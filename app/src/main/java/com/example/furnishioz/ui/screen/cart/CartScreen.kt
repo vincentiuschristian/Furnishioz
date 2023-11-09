@@ -44,12 +44,10 @@ fun CartScreen(
     ),
     onOrderButtonClicked: (String) -> Unit,
 ) {
+
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
-            is UiState.Loading -> {
-                viewModel.getAddedOrderProduct()
-            }
-
+            is UiState.Loading -> viewModel.getAddedOrderProduct()
             is UiState.Success -> {
                 CartContent(
                     uiState.data,
@@ -60,7 +58,7 @@ fun CartScreen(
                 )
             }
 
-            is UiState.Error -> {}
+            is UiState.Error -> Unit
         }
     }
 }
@@ -79,7 +77,6 @@ fun CartContent(
         state.orderProduct.count(),
         state.totalRequiredPrice
     )
-
     val listState = rememberLazyListState()
 
     Column(
@@ -120,11 +117,10 @@ fun CartContent(
                         totalPrice = item.product.price * item.count,
                         count = item.count,
                         onProductCountChanged = onProductCountChanged,
-                        modifier = modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                     )
-
                     Divider(
-                        modifier = modifier.padding(top = 16.dp)
+                        modifier = Modifier.padding(top = 16.dp)
                     )
                 }
             } else {
