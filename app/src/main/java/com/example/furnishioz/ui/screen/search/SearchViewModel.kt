@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class SearchViewModel(private val repository: FurnishiozRepository) : ViewModel() {
+class   SearchViewModel(private val repository: FurnishiozRepository) : ViewModel() {
 
     private val _uiStates: MutableStateFlow<UiState<List<OrderItem>>> =
         MutableStateFlow(UiState.Loading)
@@ -44,9 +44,7 @@ class SearchViewModel(private val repository: FurnishiozRepository) : ViewModel(
                 .collect { product ->
                     _uiStates.value = UiState.Success(product.map { OrderItem(it, 0) })
                 }
-
         }
-
     }
 
 }

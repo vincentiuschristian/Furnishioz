@@ -122,9 +122,9 @@ private fun BottomBar(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp, 16.dp, 0.dp, 0.dp))
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentState = navBackStackEntry?.destination?.route
+        ) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentState = navBackStackEntry?.destination?.route
 
         val navigationItem = listOf(
             NavigationItem(
@@ -156,8 +156,6 @@ private fun BottomBar(
                         contentDescription = item.title
                     )
                 },
-                label = { Text(item.title) },
-                selected = currentState == item.screen.route,
                 onClick = {
                     navController.navigate(item.screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
@@ -166,7 +164,9 @@ private fun BottomBar(
                         launchSingleTop = true
                         restoreState = true
                     }
-                }
+                },
+                label = { Text(item.title) },
+                selected = currentState == item.screen.route,
             )
         }
     }

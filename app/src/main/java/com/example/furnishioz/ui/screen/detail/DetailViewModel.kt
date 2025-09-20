@@ -8,6 +8,7 @@ import com.example.furnishioz.model.Product
 import com.example.furnishioz.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: FurnishiozRepository) : ViewModel() {
@@ -25,7 +26,7 @@ class DetailViewModel(private val repository: FurnishiozRepository) : ViewModel(
 
     fun addToCart(product: Product, count: Int) {
         viewModelScope.launch {
-            repository.updateOrderProduct(product.id, count)
+            repository.updateOrderProduct(product.id, count).collect()
         }
     }
 

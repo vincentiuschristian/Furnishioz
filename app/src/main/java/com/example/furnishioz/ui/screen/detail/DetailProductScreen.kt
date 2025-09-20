@@ -76,7 +76,6 @@ fun DetailProductScreen(
                     }
                 )
             }
-
             is UiState.Error -> {}
         }
     }

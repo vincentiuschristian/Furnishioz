@@ -113,7 +113,8 @@ fun SearchContent(
                 ) {
                     Text(
                         text = stringResource(R.string.no_product_found),
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.testTag("empty_data")
                     )
                 }
             }

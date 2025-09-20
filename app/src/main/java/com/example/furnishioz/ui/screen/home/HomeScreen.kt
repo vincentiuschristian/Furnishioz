@@ -87,36 +87,6 @@ fun HomeScreen(
 
             is UiState.Error -> {}
         }
-//        viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-//
-//            when (uiState) {
-//                is UiState.Loading -> viewModel.getAllItem()
-//                is UiState.Success -> {
-//                    HomeSection(
-//                        title = stringResource(R.string.best_seller),
-//                        content = {
-//                            ProductItemContent(
-//                                orderItem = uiState.data,
-//                                navigateToDetail = navigateToDetail,
-//                                modifier = modifier
-//                            )
-//                        }
-//                    )
-//                    HomeSection(
-//                        title = stringResource(R.string.recommendation),
-//                        content = {
-//                            ProductRecContent(
-//                                orderItem = uiState.data,
-//                                navigateToDetail = navigateToDetail,
-//                                modifier = modifier
-//                            )
-//                        }
-//                    )
-//                }
-//
-//                is UiState.Error -> {}
-//            }
-//        }
     }
 
 
@@ -206,7 +176,6 @@ fun Banner(modifier: Modifier = Modifier) {
         HorizontalPager(
             state = pagerState,
         ) { index ->
-
             Image(
                 painter = painterResource(imageBanner[index]),
                 contentDescription = stringResource(R.string.banner),
