@@ -62,7 +62,7 @@ fun HomeScreen(
 
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(bottom = 16.dp) // Memberi jarak agar konten paling bawah tidak menempel
+        contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
             Banner()
