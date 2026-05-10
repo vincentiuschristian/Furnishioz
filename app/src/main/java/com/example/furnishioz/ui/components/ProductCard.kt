@@ -28,7 +28,6 @@ import com.example.furnishioz.ui.theme.FurnishiozTheme
 
 @Composable
 fun ProductCard(
-    key: Long?,
     name: String,
     imageUrl: String,
     price: Int,
@@ -80,7 +79,6 @@ fun ProductCard(
 fun ProductItemPreview() {
     FurnishiozTheme {
         ProductCard(
-            key = 1,
             name = "Kanar Bed",
             imageUrl = "",
             120

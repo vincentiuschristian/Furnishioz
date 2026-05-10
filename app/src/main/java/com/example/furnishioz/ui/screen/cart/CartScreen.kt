@@ -43,6 +43,7 @@ fun CartScreen(
         )
     ),
     onOrderButtonClicked: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->

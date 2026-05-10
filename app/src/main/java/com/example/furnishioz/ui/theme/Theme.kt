@@ -1,6 +1,5 @@
 package com.example.furnishioz.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -9,76 +8,76 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
 
-
-val md_theme_light_primary = Color(545454)
-val md_theme_light_onPrimary = Color(0xFFFFFFFF)
-val md_theme_light_primaryContainer = Color(0xFFE8E970)
-val md_theme_light_onPrimaryContainer = Color(0xFF1C1D00)
-val md_theme_light_secondary = Color(0xFF775A00)
+// ==========================================
+// PALET LIGHT THEME (Terang, Bersih, Profesional)
+// ==========================================
+val md_theme_light_primary = Color(0xFF006494) // Biru elegan (Brand Color)
+val md_theme_light_onPrimary = Color(0xFFFFFFFF) // Teks putih di atas tombol biru
+val md_theme_light_primaryContainer = Color(0xFFCBE6FF) // Biru sangat muda untuk latar card aktif
+val md_theme_light_onPrimaryContainer = Color(0xFF001E30) // Teks biru gelap di atas container biru muda
+val md_theme_light_secondary = Color(0xFF50606E) // Abu-abu kebiruan untuk elemen pendukung
 val md_theme_light_onSecondary = Color(0xFFFFFFFF)
-val md_theme_light_secondaryContainer = Color(0xFFFFDF98)
-val md_theme_light_onSecondaryContainer = Color(0xFF251A00)
-val md_theme_light_tertiary = Color(0xFF2F6B26)
+val md_theme_light_secondaryContainer = Color(0xFFD3E5F5)
+val md_theme_light_onSecondaryContainer = Color(0xFF0C1D29)
+val md_theme_light_tertiary = Color(0xFF65587B) // Sentuhan warna aksen (Ungu pudar yang elegan)
 val md_theme_light_onTertiary = Color(0xFFFFFFFF)
-val md_theme_light_tertiaryContainer = Color(0xFFB1F49D)
-val md_theme_light_onTertiaryContainer = Color(0xFF002200)
-val md_theme_light_error = Color(0xFFBA1A1A)
+val md_theme_light_tertiaryContainer = Color(0xFFEADDFF)
+val md_theme_light_onTertiaryContainer = Color(0xFF211634)
+val md_theme_light_error = Color(0xFFBA1A1A) // Merah standar error Material
 val md_theme_light_errorContainer = Color(0xFFFFDAD6)
 val md_theme_light_onError = Color(0xFFFFFFFF)
 val md_theme_light_onErrorContainer = Color(0xFF410002)
-val md_theme_light_background = Color(0xFFFFFBFF)
-val md_theme_light_onBackground = Color(0xFF24005A)
-val md_theme_light_surface = Color(0xFFFFFBFF)
-val md_theme_light_onSurface = Color(0xFF24005A)
-val md_theme_light_surfaceVariant = Color(0xFFE6E3D1)
-val md_theme_light_onSurfaceVariant = Color(0xFF48473A)
-val md_theme_light_outline = Color(0xFF797869)
-val md_theme_light_inverseOnSurface = Color(0xFFF6EDFF)
-val md_theme_light_inverseSurface = Color(0xFF3A1D71)
-val md_theme_light_inversePrimary = Color(0xFFCBCC58)
-val md_theme_light_surfaceTint = Color(0xFF616200)
-val md_theme_light_outlineVariant = Color(0xFFC9C7B6)
+val md_theme_light_background = Color(0xFFFCFCFF) // Putih bersih dengan sedikit tint biru
+val md_theme_light_onBackground = Color(0xFF1A1C1E) // Teks nyaris hitam (lebih lembut di mata dari hitam pekat)
+val md_theme_light_surface = Color(0xFFFCFCFF)
+val md_theme_light_onSurface = Color(0xFF1A1C1E)
+val md_theme_light_surfaceVariant = Color(0xFFDFE3E7) // Garis batas / border
+val md_theme_light_onSurfaceVariant = Color(0xFF43474B) // Teks deskripsi / abu-abu
+val md_theme_light_outline = Color(0xFF73777B)
+val md_theme_light_inverseOnSurface = Color(0xFFF1F0F4)
+val md_theme_light_inverseSurface = Color(0xFF2F3032)
+val md_theme_light_inversePrimary = Color(0xFF8FCDFF)
+val md_theme_light_surfaceTint = Color(0xFF006494)
+val md_theme_light_outlineVariant = Color(0xFFC3C7CB)
 val md_theme_light_scrim = Color(0xFF000000)
 
-val md_theme_dark_primary = Color(0xFFCBCC58)
-val md_theme_dark_onPrimary = Color(0xFF323200)
-val md_theme_dark_primaryContainer = Color(0xFF494900)
-val md_theme_dark_onPrimaryContainer = Color(0xFFE8E970)
-val md_theme_dark_secondary = Color(0xFFEFC048)
-val md_theme_dark_onSecondary = Color(0xFF3E2E00)
-val md_theme_dark_secondaryContainer = Color(0xFF5A4300)
-val md_theme_dark_onSecondaryContainer = Color(0xFFFFDF98)
-val md_theme_dark_tertiary = Color(0xFF95D784)
-val md_theme_dark_onTertiary = Color(0xFF003A00)
-val md_theme_dark_tertiaryContainer = Color(0xFF15520F)
-val md_theme_dark_onTertiaryContainer = Color(0xFFB1F49D)
+// ==========================================
+// PALET DARK THEME (Gelap Mewah, Nyaman di Mata)
+// ==========================================
+val md_theme_dark_primary = Color(0xFF8FCDFF) // Biru pastel agar tidak menyilaukan di background gelap
+val md_theme_dark_onPrimary = Color(0xFF003450)
+val md_theme_dark_primaryContainer = Color(0xFF004B71)
+val md_theme_dark_onPrimaryContainer = Color(0xFFCBE6FF)
+val md_theme_dark_secondary = Color(0xFFB7C9D9)
+val md_theme_dark_onSecondary = Color(0xFF22323F)
+val md_theme_dark_secondaryContainer = Color(0xFF394856)
+val md_theme_dark_onSecondaryContainer = Color(0xFFD3E5F5)
+val md_theme_dark_tertiary = Color(0xFFCEC0E8)
+val md_theme_dark_onTertiary = Color(0xFF362B4A)
+val md_theme_dark_tertiaryContainer = Color(0xFF4D4162)
+val md_theme_dark_onTertiaryContainer = Color(0xFFEADDFF)
 val md_theme_dark_error = Color(0xFFFFB4AB)
 val md_theme_dark_errorContainer = Color(0xFF93000A)
 val md_theme_dark_onError = Color(0xFF690005)
 val md_theme_dark_onErrorContainer = Color(0xFFFFDAD6)
-val md_theme_dark_background = Color(0xFF121212)
-val md_theme_dark_onBackground = Color(0xFFEADDFF)
-val md_theme_dark_surface = Color(0xFF100127)
-val md_theme_dark_onSurface = Color(0xFFEADDFF)
-val md_theme_dark_surfaceVariant = Color(0xFF48473A)
-val md_theme_dark_onSurfaceVariant = Color(0xFFC9C7B6)
-val md_theme_dark_outline = Color(0xFF939182)
-val md_theme_dark_inverseOnSurface = Color(0xFF120229)
-val md_theme_dark_inverseSurface = Color(0xFFEADDFF)
-val md_theme_dark_inversePrimary = Color(0xFF616200)
-val md_theme_dark_surfaceTint = Color(0xFFCBCC58)
-val md_theme_dark_outlineVariant = Color(0xFF48473A)
+val md_theme_dark_background = Color(0xFF1A1C1E) // Abu-abu sangat gelap (bukan hitam pekat #000000)
+val md_theme_dark_onBackground = Color(0xFFE2E2E5) // Teks putih pudar (mengurangi ketegangan mata)
+val md_theme_dark_surface = Color(0xFF1A1C1E)
+val md_theme_dark_onSurface = Color(0xFFE2E2E5)
+val md_theme_dark_surfaceVariant = Color(0xFF43474B)
+val md_theme_dark_onSurfaceVariant = Color(0xFFC3C7CB) // Teks deskripsi di mode gelap
+val md_theme_dark_outline = Color(0xFF8D9195)
+val md_theme_dark_inverseOnSurface = Color(0xFF1A1C1E)
+val md_theme_dark_inverseSurface = Color(0xFFE2E2E5)
+val md_theme_dark_inversePrimary = Color(0xFF006494)
+val md_theme_dark_surfaceTint = Color(0xFF8FCDFF)
+val md_theme_dark_outlineVariant = Color(0xFF43474B)
 val md_theme_dark_scrim = Color(0xFF000000)
 
-
-private val DarkColorScheme = darkColorScheme(
+val DarkColorScheme = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -110,7 +109,7 @@ private val DarkColorScheme = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
-private val LightColorScheme = lightColorScheme(
+val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -145,7 +144,6 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun FurnishiozTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -154,17 +152,8 @@ fun FurnishiozTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
-    }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = Color.LightGray.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-        }
     }
 
     MaterialTheme(

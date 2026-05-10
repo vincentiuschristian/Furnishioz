@@ -7,12 +7,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,43 +44,39 @@ fun SearchScreen(
     val query by viewModel.query
     val uiStates by viewModel.uiState.collectAsStateWithLifecycle()
 
-    when (val state = uiStates) {
-        is UiState.Loading -> viewModel.getAllProduct()
-        is UiState.Success -> {
-            Column(
-                modifier = modifier.fillMaxSize()
-            ) {
-                SearchBar(query = query, onQueryChange = viewModel::searchProduct)
-                SearchContent(
-                    orderItem = state.data,
-                    navigateToDetail = navigateToDetail,
-                    modifier = modifier
-                )
-            }
+    LaunchedEffect(Unit) {
+        if (uiStates is UiState.Loading) {
+            viewModel.getAllProduct()
         }
-
-        is UiState.Error -> {}
     }
 
-//    viewModel.uiState.collectAsStateWithLifecycle().value.let { uiState ->
-//        when (uiState) {
-//            is UiState.Loading -> viewModel.getAllProduct()
-//            is UiState.Success -> {
-//                Column(
-//                    modifier = modifier.fillMaxSize()
-//                ) {
-//                    SearchBar(query = query, onQueryChange = viewModel::searchProduct)
-//                    SearchContent(
-//                        orderItem = uiState.data,
-//                        navigateToDetail = navigateToDetail,
-//                        modifier = modifier
-//                    )
-//                }
-//            }
-//
-//            is UiState.Error -> {}
-//        }
-//    }
+    Column(modifier = modifier.fillMaxSize()) {
+
+        SearchBar(
+            query = query,
+            onQueryChange = viewModel::searchProduct,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        when (val state = uiStates) {
+            is UiState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+            is UiState.Success -> {
+                SearchContent(
+                    orderItem = state.data,
+                    navigateToDetail = navigateToDetail
+                )
+            }
+            is UiState.Error -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Gagal memuat data pencarian.")
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -89,31 +89,31 @@ fun SearchContent(
         columns = GridCells.Adaptive(140.dp),
         contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
             .testTag("Product List")
     ) {
         if (orderItem.isNotEmpty()) {
-            items(orderItem) { data ->
+            items(orderItem, key = { it.product.id }) { data ->
                 ProductCard(
-                    key = data.product.id,
                     name = data.product.name,
                     imageUrl = data.product.image,
                     price = data.product.price,
-                    modifier = modifier.clickable {
+                    modifier = Modifier.clickable {
                         navigateToDetail(data.product.id)
                     }
                 )
             }
         } else {
-            item {
+            item(span = { GridItemSpan(maxLineSpan) }) {
                 Box(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = stringResource(R.string.no_product_found),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.testTag("empty_data")
                     )
                 }

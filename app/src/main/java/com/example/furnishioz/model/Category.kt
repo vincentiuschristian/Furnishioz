@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import com.example.furnishioz.R
 
 data class Category(
-    @DrawableRes val imageCategory: Int,
+    @param:DrawableRes val imageCategory: Int,
     val textCategory: String
 )
 

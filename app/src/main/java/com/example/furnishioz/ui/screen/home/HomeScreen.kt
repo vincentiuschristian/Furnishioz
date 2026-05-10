@@ -4,21 +4,26 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
@@ -49,46 +54,71 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize()
-    ) {
-        Banner()
-        HomeSection(
-            title = stringResource(R.string.product_category),
-            content = { CategoryRow() }
-        )
-
-        when (val state = uiState) {
-            is UiState.Loading -> viewModel.getAllItem()
-            is UiState.Success -> {
-                HomeSection(
-                    title = stringResource(R.string.best_seller),
-                    content = {
-                        ProductItemContent(
-                            orderItem = state.data,
-                            navigateToDetail = navigateToDetail,
-                            modifier = modifier
-                        )
-                    }
-                )
-                HomeSection(
-                    title = stringResource(R.string.recommendation),
-                    content = {
-                        ProductRecContent(
-                            orderItem = state.data,
-                            navigateToDetail = navigateToDetail,
-                            modifier = modifier
-                        )
-                    }
-                )
-            }
-
-            is UiState.Error -> {}
+    LaunchedEffect(Unit) {
+        if (uiState is UiState.Loading) {
+            viewModel.getAllItem()
         }
     }
 
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 16.dp) // Memberi jarak agar konten paling bawah tidak menempel
+    ) {
+        item {
+            Banner()
+        }
+
+        item {
+            HomeSection(
+                title = stringResource(R.string.product_category),
+                content = { CategoryRow() }
+            )
+        }
+
+        when (val state = uiState) {
+            is UiState.Loading -> {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(200.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
+            is UiState.Success -> {
+                item {
+                    HomeSection(
+                        title = stringResource(R.string.best_seller),
+                        content = {
+                            ProductItemContent(
+                                orderItem = state.data,
+                                navigateToDetail = navigateToDetail
+                            )
+                        }
+                    )
+                }
+                item {
+                    HomeSection(
+                        title = stringResource(R.string.recommendation),
+                        content = {
+                            ProductRecContent(
+                                orderItem = state.data,
+                                navigateToDetail = navigateToDetail
+                            )
+                        }
+                    )
+                }
+            }
+            is UiState.Error -> {
+                item {
+                    Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                        Text(text = "Terjadi kesalahan saat memuat data.")
+                    }
+                }
+            }
+        }
+    }
 
 }
 
@@ -106,11 +136,10 @@ fun ProductItemContent(
     ) {
         items(orderItem) { data ->
             ProductCard(
-                key = data.product.id,
                 name = data.product.name,
                 imageUrl = data.product.image,
                 price = data.product.price,
-                modifier = modifier.clickable {
+                modifier = Modifier.clickable {
                     navigateToDetail(data.product.id)
                 }
             )
@@ -124,13 +153,15 @@ fun ProductRecContent(
     modifier: Modifier = Modifier,
     navigateToDetail: (Long) -> Unit
 ) {
+    val shuffledItems = remember(orderItem) { orderItem.shuffled() }
+
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
     ) {
-        items(orderItem.shuffled()) { data ->
+        items(shuffledItems, key = { it.product.id }) { data ->
             ProductCard(
-                key = data.product.id,
                 name = data.product.name,
                 imageUrl = data.product.image,
                 price = data.product.price,
@@ -158,19 +189,20 @@ fun CategoryRow() {
 @Preview(showBackground = true)
 @Composable
 fun Banner(modifier: Modifier = Modifier) {
-    val imageBanner = listOf(
-        R.drawable.banner2,
-        R.drawable.banner3,
-        R.drawable.banner4,
-        R.drawable.banner5,
-        R.drawable.banner
-    )
+    val imageBanner = remember {
+        listOf(
+            R.drawable.banner2,
+            R.drawable.banner3,
+            R.drawable.banner4,
+            R.drawable.banner5,
+            R.drawable.banner
+        )
+    }
 
-    val pagerState = rememberPagerState(pageCount = {
-        5
-    })
+    val pagerState = rememberPagerState(pageCount = { imageBanner.size })
+
     Card(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(16.dp).fillMaxWidth(),
         shape = RoundedCornerShape(8.dp)
     ) {
         HorizontalPager(

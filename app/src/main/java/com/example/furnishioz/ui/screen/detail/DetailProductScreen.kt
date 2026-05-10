@@ -7,21 +7,25 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.KeyboardArrowLeft
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.furnishioz.R
@@ -49,6 +54,7 @@ import com.example.furnishioz.ui.theme.FurnishiozTheme
 @Composable
 fun DetailProductScreen(
     productId: Long,
+    modifier: Modifier = Modifier,
     viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
@@ -57,26 +63,41 @@ fun DetailProductScreen(
     navigateBack: () -> Unit,
     navigateToCart: () -> Unit,
 ) {
-    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-        when (uiState) {
-            is UiState.Loading -> viewModel.getProductById(productId)
-            is UiState.Success -> {
-                val data = uiState.data
-                DetailContent(
-                    imageUrl = data.product.image,
-                    title = data.product.name,
-                    basePrice = data.product.price,
-                    description = data.product.description,
-                    brand = data.product.brand,
-                    count = data.count,
-                    onBackClick = { navigateBack() },
-                    onAddToCart = { count ->
-                        viewModel.addToCart(data.product, count)
-                        navigateToCart()
-                    }
-                )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
+
+    LaunchedEffect(productId) {
+        if (uiState is UiState.Loading) {
+            viewModel.getProductById(productId)
+        }
+    }
+
+    when (val state = uiState) {
+        is UiState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
             }
-            is UiState.Error -> {}
+        }
+        is UiState.Success -> {
+            val data = state.data
+            DetailContent(
+                imageUrl = data.product.image,
+                title = data.product.name,
+                basePrice = data.product.price,
+                description = data.product.description,
+                brand = data.product.brand,
+                count = data.count,
+                onBackClick = navigateBack,
+                onAddToCart = { count ->
+                    viewModel.addToCart(data.product, count)
+                    navigateToCart()
+                },
+                modifier = modifier
+            )
+        }
+        is UiState.Error -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = "Gagal memuat detail produk")
+            }
         }
     }
 }
@@ -94,14 +115,14 @@ fun DetailContent(
     modifier: Modifier = Modifier,
 ) {
 
-    var totalPrice by rememberSaveable { mutableIntStateOf(0) }
     var orderCount by rememberSaveable { mutableIntStateOf(count) }
+    val totalPrice = basePrice * orderCount
 
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .weight(1f)
         ) {
@@ -110,16 +131,17 @@ fun DetailContent(
                     model = imageUrl,
                     contentDescription = stringResource(R.string.detail_image),
                     contentScale = ContentScale.Crop,
-                    modifier = modifier
+                    modifier = Modifier
                         .height(360.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
                 )
                 Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowLeft,
+                    imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowLeft,
                     contentDescription = stringResource(R.string.back),
                     tint = colorResource(R.color.back_button_color),
-                    modifier = modifier
+                    modifier = Modifier
+                        .statusBarsPadding()
                         .padding(12.dp)
                         .size(36.dp)
                         .background(
@@ -131,7 +153,7 @@ fun DetailContent(
             }
             Column(
                 horizontalAlignment = Alignment.Start,
-                modifier = modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp)
             ) {
                 Text(
                     text = title,
@@ -156,8 +178,9 @@ fun DetailContent(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = modifier.padding(top = 8.dp)
                 )
-                Divider(
-                    modifier = modifier.padding(top = 16.dp)
+                HorizontalDivider(
+                    modifier = modifier.padding(top = 16.dp),
+                    thickness = DividerDefaults.Thickness, color = DividerDefaults.color
                 )
                 Text(
                     text = stringResource(R.string.description),
@@ -184,20 +207,19 @@ fun DetailContent(
                 .height(2.dp)
                 .background(Color.LightGray)
         )
+
         Row(
-            modifier = modifier.padding(16.dp)
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             ProductCounter(
                 orderId = 1,
                 orderCount = orderCount,
                 onProductIncreased = { orderCount++ },
                 onProductDecreased = { if (orderCount > 0) orderCount-- },
-                modifier = modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(bottom = 16.dp)
+                modifier = Modifier
             )
-            Spacer(modifier = Modifier.padding(4.dp))
-            totalPrice = basePrice * orderCount
+            Spacer(modifier = Modifier.weight(1f))
             OrderButton(
                 text = stringResource(R.string.add_to_cart, totalPrice),
                 enabled = orderCount > 0,

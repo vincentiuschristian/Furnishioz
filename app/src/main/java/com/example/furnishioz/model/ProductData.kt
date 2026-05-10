@@ -6,7 +6,7 @@ object ProductData {
             id = 1,
             name = "Queen Bed",
             image = "https://raw.githubusercontent.com/cheftz/asset/main/bed2.jpg",
-            description = "Nara Bed is Livien's newest product with a natural concept that emphasizes the natural and beautiful side. Made of quality material equipped with environmentally friendly sunflower oil finishing makes this product more elegant. The wood used is mahogany and the load can be more than 100 kg",
+            description = "Nara Bed is Livien's newest product with a natural concept that emphasizes the natural and beautiful side. Made of quality material equipped with environmentally friendly sunflower oil finishing makes this product more elegant. The wood used is mahogany and the load can be more than 100 kg. Nara Bed is Livien's newest product with a natural concept that emphasizes the natural and beautiful side. Made of quality material equipped with environmentally friendly sunflower oil finishing makes this product more elegant. The wood used is mahogany and the load can be more than 100 kg. Nara Bed is Livien's newest product with a natural concept that emphasizes the natural and beautiful side. Made of quality material equipped with environmentally friendly sunflower oil finishing makes this product more elegant. The wood used is mahogany and the load can be more than 100 kg. Nara Bed is Livien's newest product with a natural concept that emphasizes the natural and beautiful side. Made of quality material equipped with environmentally friendly sunflower oil finishing makes this product more elegant. The wood used is mahogany and the load can be more than 100 kg",
             price = 350,
             brand = "Nara Furniture"
         ),

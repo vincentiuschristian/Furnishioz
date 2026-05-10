@@ -59,34 +59,41 @@ fun FurnishiozApp(
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = modifier.padding(innerPadding)
+            modifier = modifier
         ) {
             val productId = "productId"
+
             composable(Screen.Home.route) {
                 HomeScreen(
-                    navigateToDetail = { productId ->
-                        navController.navigate(Screen.DetailProduct.createRoute(productId))
+                    modifier = Modifier.padding(innerPadding),
+                    navigateToDetail = { id ->
+                        navController.navigate(Screen.DetailProduct.createRoute(id))
                     },
                 )
             }
             composable(Screen.Search.route) {
                 SearchScreen(
-                    navigateToDetail = { productId ->
-                        navController.navigate(Screen.DetailProduct.createRoute(productId))
+                    modifier = Modifier.padding(innerPadding),
+                    navigateToDetail = { id ->
+                        navController.navigate(Screen.DetailProduct.createRoute(id))
                     },
                 )
             }
             composable(Screen.Cart.route) {
                 val context = LocalContext.current
                 CartScreen(
+                    modifier = Modifier.padding(innerPadding),
                     onOrderButtonClicked = { message ->
                         showMessage(context, message)
                     }
                 )
             }
             composable(Screen.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
+
             composable(
                 route = Screen.DetailProduct.route,
                 arguments = listOf(navArgument(productId) { type = NavType.LongType }),
@@ -94,6 +101,7 @@ fun FurnishiozApp(
                 val id = it.arguments?.getLong(productId) ?: -1L
                 DetailProductScreen(
                     productId = id,
+                    modifier = Modifier,
                     navigateBack = {
                         navController.navigateUp()
                     },
